@@ -1,1 +1,1 @@
-web: java -cp target/classes/:target/main/Routes.class
+web: java -cp target/classes/main/Routes.class
