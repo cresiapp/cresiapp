@@ -1,6 +1,9 @@
 package main;
 
-import model.Consultora;
+import model.Opcion;
+import model.Pregunta;
+
+import java.util.Arrays;
 
 import org.uqbarproject.jpa.java8.extras.EntityManagerOps;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
@@ -19,9 +22,14 @@ public class Bootstrap implements WithGlobalEntityManager, EntityManagerOps, Tra
 
   public void run() {
     withTransaction(() -> {
-      persist(new Consultora("dblandit", 10));
-      persist(new Consultora("2diseños", 15));
-      persist(new Consultora("chakanalabs", 2));
+      persist(new Pregunta(
+    		  "¿Cuántos espermatozoides libera el hombre en una eyaculación?", 
+    		  Arrays.asList(
+    				  new Opcion("Miles", false), 
+    				  new Opcion("Algunos Pocos", false),
+    				  new Opcion("86", false),
+    				  new Opcion("Millones", true)),
+    		  "En promedio se liberan 250 millones (...)"));
     });
   }
 

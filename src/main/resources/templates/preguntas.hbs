@@ -1,0 +1,19 @@
+{{# partial "titulo" }}	
+	<title>Preguntas</title>
+{{/partial}}
+		
+{{# partial "contenido" }}	
+
+<p>
+	{{enunciado}}
+</p>
+
+<ul>
+{{#opciones}}
+	<li>{{texto}}</li>
+{{/opciones}}
+</ul>
+
+{{/partial}}
+				
+{{> layout.hbs }}
