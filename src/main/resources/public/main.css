@@ -1,27 +1,78 @@
 *{
   font-family: 'Encode Sans Semi Condensed', sans-serif;
-  box-sizing:content-box;
   }
+ 
   body {
-    margin-bottom: 60px;
+   margin: 0;
   }
+ 
   .container{
-    width:100%;
-    height: auto;
+   width:100%;
+   height: 100vh;
+   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#3e0576+0,7b0aec+100 */
+     background: #3e0576; /* Old browsers */
+     background: -moz-linear-gradient(top, #3e0576 0%, #7b0aec 100%); /* FF3.6-15 */
+     background: -webkit-linear-gradient(top, #3e0576 0%,#7b0aec 100%); /* Chrome10-25,Safari5.1-6 */
+     background: linear-gradient(to bottom, #3e0576 0%,#7b0aec 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3e0576', endColorstr='#7b0aec',GradientType=0 ); /* IE6-9 */
   }
-h1{
-    color:green;
-    text-align:center;
-    width:100%;
-}
-.logo{
-  width:50%;
+ 
+ h1{
+   color:#FFF;
+   text-align:center;
+ }
+ .logo img{
+  width:60%;
   margin:0 auto;
   display: block;
-} 
-.footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 60px;
-  }
+ }
+ 
+ nav {
+     position:absolute;
+     bottom:0;
+     width: 100%;
+     background:#FF942A;
+     height: 48px;
+ }
+ .circulo{
+  border:3px solid white;
+  border-radius:50%;
+  margin:0 auto;
+  width:165px;
+  height:165px;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+ }
+ .circulo img{
+  width:30%;
+  margin-left: 10px;
+ }
+ 
+ nav ul {
+  padding:0;
+  height: 48px;
+  margin:0;
+}
+ 
+ nav ul li {
+     list-style: none;
+     float: left;
+     width: 25%;
+ }
+ 
+ nav ul li a {
+     display: block;
+ }
+ nav ul li:nth-child(1) a, nav ul li:nth-child(2) a, nav ul li:nth-child(3) a {
+  border-right: 1px solid rgba(0,0,0,0.2);
+}
+ nav ul li a.active {
+     background: rgba(0,0,0,0.2);
+ }
+ 
+ nav ul li a img {
+   height: 40px;
+   margin: 5px auto 0;
+   display:block;
+ }
