@@ -1,0 +1,19 @@
+{{# partial "titulo" }}	
+	<title>Preguntas</title>
+{{/partial}}
+		
+{{# partial "contenido" }}	
+
+<h1>
+{{#if opcion.correcta }}
+Correcto
+{{ else }}
+Incorrecto
+{{/if}}
+</h1>
+
+<blockquote>{{ pregunta.explicacion }}</blockquote>
+
+{{/partial}}
+				
+{{> layout.hbs }}

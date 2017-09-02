@@ -6,6 +6,7 @@ import static spark.SparkBase.staticFileLocation;
 
 import controllers.HomeController;
 import controllers.PreguntasController;
+import controllers.ResultadosController;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class Routes {
@@ -17,8 +18,9 @@ public class Routes {
 
     HomeController home = new HomeController();
     PreguntasController preguntas = new PreguntasController();
+    ResultadosController respuestas = new ResultadosController();
     HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine();
-
+    
     port(getHerokuAssignedPort());
 
     staticFileLocation("/public");
@@ -29,6 +31,7 @@ public class Routes {
       return null;
     });
     get("/preguntas", preguntas::listar, engine);
+    get("/preguntas/:preguntaId/resultados/:opcionId", respuestas::verificar, engine);
 
   }
   
