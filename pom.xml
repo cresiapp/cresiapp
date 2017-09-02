@@ -2,13 +2,12 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>utn.dds.persistencia</groupId>
-  <artifactId>futbol</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <groupId>ar.org.cresi</groupId>
+  <artifactId>cresi</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>jpa-proof-of-concept</name>
-  <url>http://maven.apache.org</url>
+  <name>cresi</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
