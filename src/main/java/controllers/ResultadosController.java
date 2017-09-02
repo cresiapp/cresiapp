@@ -18,7 +18,9 @@ public class ResultadosController implements WithGlobalEntityManager, Transactio
 	public ModelAndView verificar(Request request, Response response) {
 	  int preguntaId = Integer.parseInt(request.params("preguntaId"));
 	  int opcionId = Integer.parseInt(request.params("opcionId"));
-	  Pregunta pregunta =  RepositorioPreguntas.instancia.buscar(preguntaId);
+	  Pregunta pregunta = RepositorioPreguntas.instancia.buscar(preguntaId);
+	  Pregunta siguiente = RepositorioPreguntas.instancia.siguiente(preguntaId);
+	  System.out.println(siguiente.getId());
 	  Opcion opcion = pregunta.getOpciones().stream().filter(it -> it.getId() == opcionId).findFirst().get();
 	  Map<String, Object> data = new HashMap<String, Object>();
 	  data.put("pregunta", pregunta);

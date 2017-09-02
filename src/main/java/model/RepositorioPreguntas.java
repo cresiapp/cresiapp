@@ -22,6 +22,11 @@ public class RepositorioPreguntas implements WithGlobalEntityManager {
 		entityManager().persist(consultora);
 	}
 
+	public Pregunta siguiente(long id) {
+		return entityManager().createQuery("from Pregunta where id=" + (id + 1), Pregunta.class)
+				.getSingleResult();
+	}
+
 	public Pregunta alguna() {
 		return entityManager().createQuery("from Pregunta", Pregunta.class).getResultList().get(0);
 	}
