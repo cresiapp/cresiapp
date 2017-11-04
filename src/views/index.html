@@ -47,19 +47,36 @@
           <img class="roulette" src="/assets/roulette.png">
           <img class="roulette-button" src="/assets/roulette-button.png">
         </div>
+        <a href="#" v-on:click="throwRoulette">Dame pregunta</a>
       </div>
-      <div v-if="page === 'question'">Acá van las preguntas</div>
+      <div v-if="page === 'question'">
+      </div>
       <div v-if="page === 'answer'">Acá van las respuestas</div>
   </div>
   <script>
     var app = new Vue({
       el: '#app',
       data: {
+        host: 'http://10.250.0.66:8080',
         page: 'roulette'
       },
       methods: {
         goQuestion: function () {
           this.page = 'question'
+        },
+        getRandomArbitrary: function (min, max) {
+          return Math.floor(Math.random() * (max - min) + min);
+        },
+        throwRoulette: function () {
+          this.getQuestion(this.getRandomArbitrary(0, 5))
+        },
+        getQuestion: function (category) {
+          fetch(`${this.host}/preguntas?categoria=${category}`)
+            .then(res => res.json())
+            .then(question => {
+              this.question = question
+              this.goQuestion()
+          })
         }
       }
     })
