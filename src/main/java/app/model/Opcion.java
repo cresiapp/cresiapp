@@ -22,6 +22,12 @@ public class Opcion {
 		this.texto = texto;
 		this.correcta = esCorrecta;
 	}
+
+	public Opcion(String texto) {
+		super();
+		this.texto = texto;
+		this.correcta = false;
+	}
 	
 	public long getId() {
 		return id;
