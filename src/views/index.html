@@ -95,12 +95,11 @@
       <div class="row"  v-if="page === 'question'">
         <div class="col-md-12 questions-container">
           <div class="jumbotron">
-            <h4>¿De donde vienen los bebés?</h4> 
+            <h4>{{ question.enunciado }}</h4>
           </div>
-          <button class="btn col-md-8 offset-sm-2">Para ayudar al organismo de ellas y del psible bebe, antes de intentar quedar embarazada</button>
-          <button class="btn col-md-8 offset-sm-2">De un árbol</button>
-          <button class="btn col-md-8 offset-sm-2">De un repollo</button>
-          <button class="btn col-md-8 offset-sm-2">De una semillita</button>
+          <button class="btn col-md-8 offset-sm-2" v-for="option in question.opciones" v-bind:data-id="option.id" v-on:click="submitAnswer">
+            {{ option.texto }}
+          </button>
         </div>
       </div>
 
@@ -161,6 +160,9 @@
         goQuestion: function () {
           this.page = 'question'
         },
+        goAnswer: function () {
+          this.page = 'answer'
+        },
         getRandomArbitrary: function (min, max) {
           return Math.floor(Math.random() * (max - min) + min);
         },
@@ -176,6 +178,15 @@
               this.question = question
               this.goQuestion()
           })
+        },
+        submitAnswer: function (ev) {
+          const answerId = ev.target.dataset["id"]
+          fetch(`${this.host}/respuestas?pregunta_id=${this.question.id}&respuesta_id=${answerId}`)
+            .then(res => res.json())
+            .then(answer => {
+              this.answer = answer
+              this.goAnswer()
+            })
         }
       }
     })
