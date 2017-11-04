@@ -3,9 +3,16 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>ar.org.cresi</groupId>
-  <artifactId>cresi</artifactId>
+  <artifactId>cresi-api</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.8.RELEASE</version>
+    </parent>
+
 
   <name>cresi</name>
 
@@ -14,56 +21,24 @@
   </properties>
 
   <dependencies>
-	 
-	 <!-- UI dependencies -->
-	<dependency>
-	    <groupId>com.sparkjava</groupId>
-	    <artifactId>spark-core</artifactId>
-	    <version>2.2</version>
-	</dependency>
-	
-	<dependency>
-	    <groupId>com.sparkjava</groupId>
-	    <artifactId>spark-template-handlebars</artifactId>
-	    <version>2.3</version>
-	</dependency>
-	
-	<dependency>
-		<groupId>com.google.code.gson</groupId>
-		<artifactId>gson</artifactId>
-		<version>2.3.1</version>
-	</dependency>
-		
 
-    <!-- JPA Persistence Dependencies -->
-    <dependency>
-      <groupId>org.uqbar-project</groupId>
-	  <artifactId>jpa-java8-extras</artifactId>
-	  <version>1.0-alpha-1</version>
-	</dependency>
-    
-    <!-- driver jdbc -->
-    <dependency>
-		<groupId>mysql</groupId>
-		<artifactId>mysql-connector-java</artifactId>
-		<version>5.1.26</version>
-	</dependency>
-            
-
-    <!-- dependency test -->
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-all</artifactId>
-      <version>1.9.5</version>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.11</version>
-      <scope>test</scope>
-    </dependency>
+      <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-data-rest</artifactId>
+      </dependency>
+      <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-data-jpa</artifactId>
+      </dependency>
+      <dependency>
+          <groupId>com.h2database</groupId>
+          <artifactId>h2</artifactId>
+      </dependency>
+      <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-test</artifactId>
+          <scope>test</scope>
+      </dependency>
 
     <dependency>
       <groupId>org.hsqldb</groupId>
@@ -127,6 +102,12 @@
                 </archive>
             </configuration>
         </plugin>
+
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
     </plugins>
   </build>
 </project>
