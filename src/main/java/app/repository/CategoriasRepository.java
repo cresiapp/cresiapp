@@ -1,4 +1,4 @@
-package app;
+package app.repository;
 
 import app.model.Categoria;
 import app.model.Pregunta;

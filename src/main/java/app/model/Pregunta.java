@@ -9,6 +9,7 @@ import javax.persistence.*;
 public class Pregunta {
 
 	@Id
+    @GeneratedValue
 	private long id;
 
 	private String enunciado;
@@ -25,7 +26,7 @@ public class Pregunta {
 	public Pregunta() {
 	}
 
-	public Pregunta(long id, String enunciado, Collection<Opcion> opciones, String explicacion, Categoria categoria) {
+	public Pregunta(String enunciado, Collection<Opcion> opciones, String explicacion, Categoria categoria) {
 		super();
 		this.enunciado = enunciado;
 		this.opciones = opciones;
