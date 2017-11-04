@@ -13,7 +13,11 @@ public class CSVLoader {
 
     private List<Pregunta> preguntas;
 
-    private List<Categoria> categorias;
+    public CSVLoader() {
+        this.descripcionPorCategoria = new HashMap<String, Categoria>();
+        this.preguntas = new ArrayList<>();
+        this.load();
+    }
 
     public void load() {
         Reader in = null;
@@ -37,9 +41,9 @@ public class CSVLoader {
     }
 
     private Categoria determinarCategoria(String nombreCategoria) {
-        Categoria categoria = descripcionPorCategoria.getOrDefault(nombreCategoria);
-        this.categorias.add(categoria);
-        return categoria;
+        Categoria defaultValue = new Categoria(descripcionPorCategoria.size(), nombreCategoria);
+        descripcionPorCategoria.putIfAbsent(nombreCategoria, defaultValue);
+        return descripcionPorCategoria.get(nombreCategoria);
     }
 
     private Collection<Opcion> crearOpciones(CSVRecord opcionesCSV) {
@@ -53,8 +57,8 @@ public class CSVLoader {
         return opciones;
     }
 
-    public List<Categoria> getCategorias() {
-        return categorias;
+    public Collection<Categoria> getCategorias() {
+        return descripcionPorCategoria.values();
     }
 
     public List<Pregunta> getPreguntas() {

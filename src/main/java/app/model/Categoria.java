@@ -8,7 +8,6 @@ import javax.persistence.Id;
 public class Categoria {
 
     @Id
-    @GeneratedValue
     private long id;
 
     private String descripcion;
