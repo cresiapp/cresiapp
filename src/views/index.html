@@ -44,10 +44,10 @@
 
       <div class="row" v-if="page === 'roulette'">
         <div class="col-md-12 roulette-container">
-          <img class="roulette" src="/assets/roulette.png">
-          <img class="roulette-button" src="/assets/roulette-button.png">
+          <a href="#" v-on:click="throwRoulette">
+            <img class="roulette" src="/assets/roulette.png">
+          </a>
         </div>
-        <a href="#" v-on:click="throwRoulette">Dame pregunta</a>
       </div>
       <div v-if="page === 'question'">
       </div>
@@ -68,7 +68,9 @@
           return Math.floor(Math.random() * (max - min) + min);
         },
         throwRoulette: function () {
-          this.getQuestion(this.getRandomArbitrary(0, 5))
+          setTimeout(() => {
+            this.getQuestion(this.getRandomArbitrary(0, 5))
+          }, 3000)
         },
         getQuestion: function (category) {
           fetch(`${this.host}/preguntas?categoria=${category}`)
