@@ -8,4 +8,5 @@ public class Endpoints {
     public static final String CATEGORIAS = "categorias";
 
 
+    public static final String RESPUESTAS = "respuestas";
 }
