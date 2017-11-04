@@ -34,6 +34,18 @@
       background-color: #4CB9FF;
       min-height: 100vh;
     }
+
+
+    .questions-container button{
+      margin-bottom: 10px;
+      white-space: normal;
+    }
+
+    .jumbotron{
+      background-color:#FFA500;
+      text-align: center;
+      color: white;
+    }
   </style>
 </head>
 <body>
@@ -48,14 +60,31 @@
           <img class="roulette-button" src="/assets/roulette-button.png">
         </div>
       </div>
-      <div v-if="page === 'question'">Acá van las preguntas</div>
-      <div v-if="page === 'answer'">Acá van las respuestas</div>
+
+      <div class="row"  v-if="page === 'question'">
+        <div class="col-md-12 questions-container">
+          <div class="jumbotron">
+            <h4>¿De donde vienen los bebés?</h4> 
+          </div>
+          <button class="btn col-md-8 offset-sm-2">Para ayudar al organismo de ellas y del psible bebe, antes de intentar quedar embarazada</button>
+          <button class="btn col-md-8 offset-sm-2">De un árbol</button>
+          <button class="btn col-md-8 offset-sm-2">De un repollo</button>
+          <button class="btn col-md-8 offset-sm-2">De una semillita</button>
+        </div>
+      </div>
+
+
+
+
+      <div v-if="page === 'answer'">
+        Acá van las respuestas
+    </div>
   </div>
   <script>
     var app = new Vue({
       el: '#app',
       data: {
-        page: 'roulette'
+        page: 'question'
       },
       methods: {
         goQuestion: function () {
