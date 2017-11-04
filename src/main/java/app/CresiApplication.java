@@ -1,7 +1,7 @@
 package app;
 
 
-import app.controllers.repository.PreguntasRepository;
+import app.repository.PreguntasRepository;
 import app.model.Categoria;
 import app.model.Opcion;
 import app.model.Pregunta;

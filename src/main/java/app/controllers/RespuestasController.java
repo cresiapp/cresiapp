@@ -1,20 +1,16 @@
 package app.controllers;
 
 
-import app.controllers.repository.PreguntasRepository;
-import app.controllers.repository.OpcionesRepository;
-import app.controllers.tos.RespuestaDTO;
+import app.repository.PreguntasRepository;
+import app.repository.OpcionesRepository;
 import app.controllers.tos.ResultadoRespuestaDTO;
-import app.model.Categoria;
 import app.model.Opcion;
 import app.model.Pregunta;
 import app.model.NoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -30,16 +26,16 @@ public class RespuestasController {
     @RequestMapping(method = RequestMethod.GET)
     public ResultadoRespuestaDTO responder(@RequestParam Map<String,String> requestParams){
 
-        long preguntaId = Long.valueOf(requestParams.get("preguntaId"));
-        long respuestaId = Long.valueOf(requestParams.get("respuestaId"));
+        Long preguntaId = Long.valueOf(requestParams.get("preguntaId"));
+        Long respuestaId = Long.valueOf(requestParams.get("respuestaId"));
 
-        Opcion opcion = opciones.findOne(preguntaId);
+        Opcion opcion = opciones.findOne(respuestaId);
 
         if(opcion == null){
             throw new NoEncontradoException("No hay respuesta para lo elegido");
         }
 
-        Pregunta preguntaRealizada = preguntas.findOne(respuestaId);
+        Pregunta preguntaRealizada = preguntas.findOne(preguntaId);
 
         if(preguntaRealizada == null){
             throw new NoEncontradoException("No hay pregunta en la base");

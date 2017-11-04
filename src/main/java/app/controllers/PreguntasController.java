@@ -1,15 +1,10 @@
 package app.controllers;
 
 
-import app.controllers.repository.PreguntasRepository;
+import app.repository.PreguntasRepository;
 import app.controllers.tos.PreguntaDTO;
-import app.model.Categoria;
-import app.model.Opcion;
-import app.model.Pregunta;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Arrays;
 
 @RestController
 @CrossOrigin

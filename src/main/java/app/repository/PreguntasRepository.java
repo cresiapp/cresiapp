@@ -1,4 +1,4 @@
-package app.controllers.repository;
+package app.repository;
 
 
 import app.model.Pregunta;
