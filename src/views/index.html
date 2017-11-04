@@ -10,13 +10,22 @@
 </head>
 <body>
   <div id="app" class="container">
-    {{ message }}
+      <div v-if="page === 'home'">
+        Esta es la home. Clickeá <a href="#" v-on:click="goQuestion">acá</a> para ir a las preguntas.
+      </div>
+      <div v-if="page === 'question'">Acá van las preguntas</div>
+      <div v-if="page === 'answer'">Acá van las respuestas</div>
   </div>
   <script>
     var app = new Vue({
       el: '#app',
       data: {
-        message: 'Hello Vue!'
+        page: 'home'
+      },
+      methods: {
+        goQuestion: function () {
+          this.page = 'question'
+        }
       }
     })
   </script>
