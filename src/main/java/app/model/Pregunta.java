@@ -20,7 +20,7 @@ public class Pregunta {
 	@OneToMany(cascade = {CascadeType.ALL})
 	private Collection<Opcion> opciones;
 
-	@OneToOne
+	@OneToOne(cascade =  {CascadeType.REFRESH, CascadeType.DETACH})
 	private Categoria categoria;
 
 	public Pregunta() {
