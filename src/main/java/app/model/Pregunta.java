@@ -9,7 +9,6 @@ import javax.persistence.*;
 public class Pregunta {
 
 	@Id
-	@GeneratedValue
 	private long id;
 
 	private String enunciado;
@@ -26,7 +25,7 @@ public class Pregunta {
 	public Pregunta() {
 	}
 
-	public Pregunta(String enunciado, Collection<Opcion> opciones, String explicacion, Categoria categoria) {
+	public Pregunta(long id, String enunciado, Collection<Opcion> opciones, String explicacion, Categoria categoria) {
 		super();
 		this.enunciado = enunciado;
 		this.opciones = opciones;
@@ -56,5 +55,10 @@ public class Pregunta {
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+    }
+
+    public Opcion opcionCorrecta() {
+	    return this.opciones.stream().filter(p -> p.isCorrecta()).findFirst().get();
+
     }
 }
