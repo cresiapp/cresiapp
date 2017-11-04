@@ -76,11 +76,22 @@
   .navegacion {
     text-transform: uppercase;
   }
+
+  .home img{
+    margin:0 auto;
+    width: auto;
+    height: 300px;
+  }
+  
+  .home p{
+    text-align: center;
+  }
+
   </style>
 </head>
 <body>
   <div id="app" class="container">
-      <div class="row header">
+      <div v-if="page !== 'home'" class="row header">
         <img src="/assets/logo.png" alt="Cresi">
       </div>
 
@@ -101,6 +112,14 @@
             {{ option.texto }}
           </button>
         </div>
+      </div>
+
+
+      <div class="row home" v-if="page === 'home'">
+        <img src="/assets/logo.png" alt="Cresi" class="img-responsive">
+        
+        <p class="col-md-12">Conocé para aprender más</p>
+        <button class="col-md-12">Jugar</button>
       </div>
 
 
@@ -133,19 +152,12 @@
            
 
 
-          
-
-
-
-
-
-          
-          
-
-
 
         </div>
       </div>
+
+
+      
 
 
   </div>
@@ -154,7 +166,7 @@
       el: '#app',
       data: {
         host: 'http://10.250.0.66:8080',
-        page: 'answer'
+        page: 'home'
       },
       methods: {
         goQuestion: function () {
