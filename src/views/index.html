@@ -38,8 +38,9 @@
       min-height: 100vh;
     }
 
-    
-    .questions-container button{
+
+    .questions-container button {
+      cursor: pointer;
       margin-bottom: 10px;
       text-align: center;
       white-space: normal;
@@ -176,9 +177,7 @@
           return Math.floor(Math.random() * (max - min) + min);
         },
         throwRoulette: function () {
-          setTimeout(() => {
-            this.getQuestion(this.getRandomArbitrary(0, 5))
-          }, 3000)
+          this.getQuestion(this.getRandomArbitrary(0, 5))
         },
         getQuestion: function (category) {
           fetch(`${this.host}/preguntas?categoria=${category}`)
