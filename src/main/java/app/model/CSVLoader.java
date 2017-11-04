@@ -2,8 +2,10 @@ package app.model;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
+import org.springframework.core.io.ClassPathResource;
 
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.Reader;
 import java.util.*;
 
@@ -22,7 +24,7 @@ public class CSVLoader {
     public void load() {
         Reader in = null;
         try {
-            in = new FileReader("preguntas.csv");
+            in = new FileReader(new ClassPathResource("preguntas.csv").getFile());
             Iterable<CSVRecord> records = CSVFormat.RFC4180.withFirstRecordAsHeader().parse(in);
             for (CSVRecord record : records) {
                 preguntas.add(
@@ -34,6 +36,7 @@ public class CSVLoader {
                         )
                 );
             }
+            in.close();
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -49,10 +52,9 @@ public class CSVLoader {
     private Collection<Opcion> crearOpciones(CSVRecord opcionesCSV) {
         Collection<Opcion> opciones = new ArrayList<Opcion>();
         opciones.add(new Opcion(opcionesCSV.get("Respuestas 1")));
-        opciones.add(new Opcion(opcionesCSV.get("Respuestas 2")));
-        opciones.add(new Opcion(opcionesCSV.get("Respuestas 3")));
-        opciones.add(new Opcion(opcionesCSV.get("Respuestas 4")));
-        opciones.add(new Opcion(opcionesCSV.get("Respuestas 5")));
+        opciones.add(new Opcion(opcionesCSV.get("Respuesta 2")));
+        opciones.add(new Opcion(opcionesCSV.get("Respuesta 3")));
+        opciones.add(new Opcion(opcionesCSV.get("Respuesta 4")));
         opciones.add(new Opcion(opcionesCSV.get("Correcta"), true));
         return opciones;
     }
