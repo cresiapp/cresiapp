@@ -56,8 +56,9 @@
 
       <div class="row" v-if="page === 'roulette'">
         <div class="col-md-12 roulette-container">
-          <img class="roulette" src="/assets/roulette.png">
-          <img class="roulette-button" src="/assets/roulette-button.png">
+          <a href="#" v-on:click="throwRoulette">
+            <img class="roulette" src="/assets/roulette.png">
+          </a>
         </div>
       </div>
 
@@ -84,11 +85,28 @@
     var app = new Vue({
       el: '#app',
       data: {
-        page: 'question'
+        host: 'http://10.250.0.66:8080',
+        page: 'roulette'
       },
       methods: {
         goQuestion: function () {
           this.page = 'question'
+        },
+        getRandomArbitrary: function (min, max) {
+          return Math.floor(Math.random() * (max - min) + min);
+        },
+        throwRoulette: function () {
+          setTimeout(() => {
+            this.getQuestion(this.getRandomArbitrary(0, 5))
+          }, 3000)
+        },
+        getQuestion: function (category) {
+          fetch(`${this.host}/preguntas?categoria=${category}`)
+            .then(res => res.json())
+            .then(question => {
+              this.question = question
+              this.goQuestion()
+          })
         }
       }
     })
