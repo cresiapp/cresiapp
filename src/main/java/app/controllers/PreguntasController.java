@@ -2,6 +2,7 @@ package app.controllers;
 
 
 import app.model.Categoria;
+import app.model.NoEncontradoException;
 import app.model.Pregunta;
 import app.repository.CategoriasRepository;
 import app.repository.PreguntasRepository;
@@ -9,8 +10,10 @@ import app.controllers.tos.PreguntaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 @RestController
@@ -45,11 +48,25 @@ public class PreguntasController {
     }
 
     private List<Pregunta> preguntasCandidatas(Long categoriaId) {
-        if(categoriaId != null) {
-            Categoria categoria = categorias.findOne(categoriaId);
-            return preguntas.findByCategoria(categoria);
+        List<Pregunta> posibles = new ArrayList<>();
+        posibles = posiblesSegunCategoria(categoriaId, posibles);
+
+        if(posibles.isEmpty()){
+            posibles = todas();
         }
 
+        return posibles;
+    }
+
+    private List<Pregunta> posiblesSegunCategoria(Long categoriaId, List<Pregunta> posibles) {
+        if(categoriaId != null) {
+            Categoria categoria = Optional.ofNullable(categorias.findOne(categoriaId)).orElseThrow(()-> new NoEncontradoException("Categoria inexistente"));
+            posibles = preguntas.findByCategoria(categoria);
+        }
+        return posibles;
+    }
+
+    private List<Pregunta> todas() {
         List<Pregunta> posiblesPreguntas = new ArrayList<>();
         Iterable<Pregunta> all = preguntas.findAll();
         all.forEach( cate -> posiblesPreguntas.add(cate));
