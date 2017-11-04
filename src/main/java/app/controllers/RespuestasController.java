@@ -26,8 +26,8 @@ public class RespuestasController {
     @RequestMapping(method = RequestMethod.GET)
     public ResultadoRespuestaDTO responder(@RequestParam Map<String,String> requestParams){
 
-        Long preguntaId = Long.valueOf(requestParams.get("preguntaId"));
-        Long respuestaId = Long.valueOf(requestParams.get("respuestaId"));
+        Long preguntaId = Long.valueOf(requestParams.get("pregunta_id"));
+        Long respuestaId = Long.valueOf(requestParams.get("respuesta_id"));
 
         Opcion opcion = opciones.findOne(respuestaId);
 
