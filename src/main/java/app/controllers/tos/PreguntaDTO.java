@@ -32,4 +32,8 @@ public class PreguntaDTO {
     public String getEnunciado() {
         return enunciado;
     }
+
+    public long getCategoria() {
+        return categoria;
+    }
 }
