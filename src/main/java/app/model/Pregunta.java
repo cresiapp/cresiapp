@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class Pregunta {
 
 	@Id
-	@GeneratedValue
+    @GeneratedValue
 	private long id;
 
 	private String enunciado;
@@ -20,7 +20,7 @@ public class Pregunta {
 	@OneToMany(cascade = {CascadeType.ALL})
 	private Collection<Opcion> opciones;
 
-	@OneToOne
+	@OneToOne(cascade =  {CascadeType.REFRESH, CascadeType.DETACH})
 	private Categoria categoria;
 
 	public Pregunta() {
@@ -56,5 +56,10 @@ public class Pregunta {
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+    }
+
+    public Opcion opcionCorrecta() {
+	    return this.opciones.stream().filter(p -> p.isCorrecta()).findFirst().get();
+
     }
 }

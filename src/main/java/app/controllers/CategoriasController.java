@@ -1,13 +1,15 @@
 package app.controllers;
 
 
+import app.repository.CategoriasRepository;
 import app.model.Categoria;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -15,17 +17,15 @@ import java.util.List;
 @RequestMapping(Endpoints.CATEGORIAS)
 public class CategoriasController {
 
+    @Autowired
+    CategoriasRepository categorias;
+
     @RequestMapping(method = RequestMethod.GET)
     public List<Categoria> list(){
-
-
-        return Arrays.asList(
-                new Categoria(0,"Derecho"),
-                new Categoria(1,"Salud"),
-                new Categoria(2,"Diversidad"),
-                new Categoria(3,"Proyecto"),
-                new Categoria(4,"Prevencion")
-        );
+        List<Categoria> todas = new ArrayList<>();
+        Iterable<Categoria> all = categorias.findAll();
+        all.forEach( cate -> todas.add(cate));
+        return todas;
 
     }
 

@@ -1,35 +1,75 @@
 package app.controllers;
 
 
-import app.controllers.tos.PreguntaDTO;
 import app.model.Categoria;
-import app.model.Opcion;
+import app.model.NoEncontradoException;
 import app.model.Pregunta;
+import app.repository.CategoriasRepository;
+import app.repository.PreguntasRepository;
+import app.controllers.tos.PreguntaDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
+import javax.swing.text.html.Option;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 
 @RestController
 @CrossOrigin
 @RequestMapping(Endpoints.PREGUNTAS)
 public class PreguntasController {
+    private final Random randomGenerator;
+
+    @Autowired
+    private PreguntasRepository preguntas;
+
+    @Autowired
+    private CategoriasRepository categorias;
 
 
-    @RequestMapping(method = RequestMethod.GET)
-    public PreguntaDTO getPregunta(@RequestParam (value="categoria", required = false) Long categoria){
-        return new PreguntaDTO(new Pregunta(
-                "¿Qué ley otorga la responsabilidad de educar en la sexualidad a las escuelas y docentes?",
-                Arrays.asList(
-                        new Opcion("26150", true),
-                        new Opcion("25500", false),
-                        new Opcion("15200", false),
-                        new Opcion("25150", false)
-                ),
-                "En octubre de 2006, el Congreso sancionó la Ley Nacional que crea el Programa Nacional de Educación Sexual Integral (Ley 26.150). Esta ley establece: “Todos los educandos tienen derecho a recibir educación sexual integral en los establecimientos educativos públicos, de gestión estatal y privada de las jurisdicciones nacional, provincial, de la Ciudad Autónoma de Buenos Aires y municipal”. ",
-                new Categoria(0,"Derecho"))
-        );
+    public PreguntasController(){
+        randomGenerator = new Random();
     }
 
+    @RequestMapping(method = RequestMethod.GET)
+    public PreguntaDTO getPregunta(@RequestParam (value="categoria", required = false) Long categoriaId){
 
+        List<Pregunta> posiblesPreguntas = this.preguntasCandidatas(categoriaId);
+        Pregunta seleccionada = seleccionarPreguntaRandom(posiblesPreguntas);
+        return new PreguntaDTO(seleccionada);
 
+    }
+
+    private Pregunta seleccionarPreguntaRandom(List<Pregunta> posiblesPreguntas) {
+        int index = randomGenerator.nextInt(posiblesPreguntas.size());
+        return posiblesPreguntas.get(index);
+    }
+
+    private List<Pregunta> preguntasCandidatas(Long categoriaId) {
+        List<Pregunta> posibles = new ArrayList<>();
+        posibles = posiblesSegunCategoria(categoriaId, posibles);
+
+        if(posibles.isEmpty()){
+            posibles = todas();
+        }
+
+        return posibles;
+    }
+
+    private List<Pregunta> posiblesSegunCategoria(Long categoriaId, List<Pregunta> posibles) {
+        if(categoriaId != null) {
+            Categoria categoria = Optional.ofNullable(categorias.findOne(categoriaId)).orElseThrow(()-> new NoEncontradoException("Categoria inexistente"));
+            posibles = preguntas.findByCategoria(categoria);
+        }
+        return posibles;
+    }
+
+    private List<Pregunta> todas() {
+        List<Pregunta> posiblesPreguntas = new ArrayList<>();
+        Iterable<Pregunta> all = preguntas.findAll();
+        all.forEach( cate -> posiblesPreguntas.add(cate));
+        return  posiblesPreguntas;
+    }
 }
