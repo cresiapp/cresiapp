@@ -7,11 +7,46 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/vue"></script>
   <title>Cresi</title>
+  <style>
+    .header {
+      background-image: url('/assets/header-bg.png');
+      background-size: cover;
+      height: 15vh;
+      margin-bottom: 3vh;
+    }
+
+    .header img {
+      width: 20%;
+      align-self: center;
+    }
+
+    .roulette-container {
+      text-align: center;
+      margin-top: 10vh;
+    }
+
+    .roulette {
+      width: 100%;
+      max-width: 600px;
+    }
+
+    .container {
+      background-color: #4CB9FF;
+      min-height: 100vh;
+    }
+  </style>
 </head>
 <body>
   <div id="app" class="container">
-      <div v-if="page === 'home'">
-        Esta es la home. Clickeá <a href="#" v-on:click="goQuestion">acá</a> para ir a las preguntas.
+      <div class="row header">
+        <img src="/assets/logo.png" alt="Cresi">
+      </div>
+
+      <div class="row" v-if="page === 'roulette'">
+        <div class="col-md-12 roulette-container">
+          <img class="roulette" src="/assets/roulette.png">
+          <img class="roulette-button" src="/assets/roulette-button.png">
+        </div>
       </div>
       <div v-if="page === 'question'">Acá van las preguntas</div>
       <div v-if="page === 'answer'">Acá van las respuestas</div>
@@ -20,7 +55,7 @@
     var app = new Vue({
       el: '#app',
       data: {
-        page: 'home'
+        page: 'roulette'
       },
       methods: {
         goQuestion: function () {
