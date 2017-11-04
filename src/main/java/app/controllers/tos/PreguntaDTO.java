@@ -12,11 +12,13 @@ public class PreguntaDTO {
     private final long id;
     private final List<OpcionDTO> opciones;
     private final String enunciado;
+    private final long categoria;
 
     public PreguntaDTO(Pregunta pregunta){
         this.id = pregunta.getId();
         this.enunciado = pregunta.getEnunciado();
         this.opciones = pregunta.getOpciones().stream().map(opcion -> new OpcionDTO(opcion)).collect(Collectors.toList());
+        this.categoria = pregunta.getCategoria().getId();
     };
 
     public long getId() {
