@@ -24,7 +24,7 @@ public class CategoriasController {
                 new Categoria(1,"Salud"),
                 new Categoria(2,"Diversidad"),
                 new Categoria(3,"Proyecto"),
-                new Categoria(4,"Prevension")
+                new Categoria(4,"Prevencion")
         );
 
     }
