@@ -169,11 +169,19 @@
       </div>
 
 
-      
+
 
 
   </div>
   <script>
+    const CATEGORIES = {
+      0: 'Diversidad',
+      1: 'Salud',
+      2: 'Prevención',
+      3: 'Proyecto',
+      4: 'Derecho',
+      5: 'Al azar'
+    }
     var app = new Vue({
       el: '#app',
       data: {
@@ -188,7 +196,7 @@
           this.page = 'answer'
         },
         getRandomCategory: function (min, max) {
-          return Math.floor(Math.random() * (max - min) + min);
+          return Math.floor(Math.random() * (max + 1 - min) + min);
         },
         throwRoulette: function () {
           // No me enorgullezco de este código. Refactor needed.
@@ -229,7 +237,12 @@
           }, 1000)
         },
         getQuestion: function (category) {
-          fetch(`${this.host}/preguntas?categoria=${category}`)
+          let url = `${this.host}/preguntas`
+          if (category !== 5) { // Si la categoría es Al azar, no se le envía categoría al backend
+            url += `?categoria=${category}`
+          }
+
+          fetch(url)
             .then(res => res.json())
             .then(question => {
               this.question = question
