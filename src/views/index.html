@@ -11,6 +11,12 @@
   <style>
 
 
+    .texto-blanco {
+        color: white;
+        font-size: 2em;
+    }
+
+
     .header {
       background-image: url('/assets/header-bg.png');
       background-size: cover;
@@ -113,7 +119,8 @@
 
       <div class="row home" v-if="page === 'home'">
         <img src="/assets/logo.png" alt="Cresi" class="img-responsive">
-        <p class="col-md-12">Conocé para aprender más</p>
+
+        <p class="col-md-12 texto-blanco">Aprendé jugando</p>
           <div class="mx-auto" style="width:100px">
               <button v-on:click="goRoulette" type="button" class="btn btn-secondary btn-lg">
                 <span class="glyphicon glyphicon-play" aria-hidden="true"></span> Jugar
