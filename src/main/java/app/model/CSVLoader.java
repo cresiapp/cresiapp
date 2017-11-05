@@ -58,26 +58,11 @@ public class CSVLoader {
     private Collection<Opcion> crearOpciones(CSVRecord opcionesCSV) {
         List<Opcion> opciones = new ArrayList<>();
         List<String> textosOpciones = new ArrayList<>();
-        agregarOpcion(opcionesCSV,"Respuestas 1", opciones, textosOpciones);
-        agregarOpcion(opcionesCSV,"Respuesta 2", opciones, textosOpciones);
-        agregarOpcion(opcionesCSV,"Respuesta 3", opciones, textosOpciones);
-        agregarOpcion(opcionesCSV,"Respuesta 4", opciones, textosOpciones);
-        marcarCorrecta(opcionesCSV.get("Correcta"), textosOpciones, opciones);
+        opciones.add(new Opcion(opcionesCSV.get("Respuestas 1")));
+        opciones.add(new Opcion(opcionesCSV.get("Respuesta 2")));
+        opciones.add(new Opcion(opcionesCSV.get("Respuesta 3")));
+        opciones.add(new Opcion(opcionesCSV.get("Correcta"),true));
         return opciones;
-    }
-
-    private void marcarCorrecta(String textoCorrecta, List<String> textosOpciones, List<Opcion> opciones) {
-        int index = textosOpciones.indexOf(textoCorrecta);
-        if(index == -1){
-            throw new RuntimeException(String.format("CSV mal formado, respuesta buscada: [%s] posibles: [%s]",textoCorrecta, textosOpciones));
-        }
-        opciones.get(index).setCorrecta(true);
-    }
-
-    private void agregarOpcion(CSVRecord opcionesCSV, String columna, Collection<Opcion> opciones, List<String> textosOpciones) {
-        String rta1 = opcionesCSV.get(columna);
-        opciones.add(new Opcion(rta1));
-        textosOpciones.add(rta1);
     }
 
     public Collection<Categoria> getCategorias() {
