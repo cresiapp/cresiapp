@@ -33,6 +33,14 @@
       max-width: 600px;
     }
 
+    .roulette.frame {
+      display: none;
+    }
+
+    .roulette.frame.visible {
+      display: block;
+    }
+
     .container {
       background-color: #4CB9FF;
       min-height: 100vh;
@@ -99,7 +107,12 @@
       <div class="row" v-if="page === 'roulette'">
         <div class="col-md-12 roulette-container">
           <a href="#" v-on:click="throwRoulette">
-            <img class="roulette" src="/assets/roulette.png">
+            <img class="roulette frame visible" data-category=0 src="/assets/ruleta-a3.png">
+            <img class="roulette frame" data-category=1 src="/assets/ruleta-a4.png">
+            <img class="roulette frame" data-category=2 src="/assets/ruleta-a5.png">
+            <img class="roulette frame" data-category=3 src="/assets/ruleta-a6.png">
+            <img class="roulette frame" data-category=4 src="/assets/ruleta-a7.png">
+            <img class="roulette frame" data-category=5 src="/assets/ruleta-a8.png">
           </a>
         </div>
       </div>
@@ -173,11 +186,46 @@
         goAnswer: function () {
           this.page = 'answer'
         },
-        getRandomArbitrary: function (min, max) {
+        getRandomCategory: function (min, max) {
           return Math.floor(Math.random() * (max - min) + min);
         },
         throwRoulette: function () {
-          this.getQuestion(this.getRandomArbitrary(0, 5))
+          // No me enorgullezco de este código. Refactor needed.
+          let currentCat = 0
+          function nextFrame () {
+            const activeEl = document.querySelector(".roulette.frame.visible")
+            const currentIdx = +activeEl.dataset["category"]
+            const nextIdx = currentIdx === 5 ? 0 : (+currentIdx + 1)
+            const nextEl = document.querySelector(`.roulette.frame[data-category="${nextIdx}"]`)
+            nextEl.classList.add("visible")
+            activeEl.classList.remove("visible")
+            currentCat = nextIdx
+          }
+
+          let speed = 100
+          const category = this.getRandomCategory(0, 5)
+          let count = 0
+
+          const i1 = setInterval(nextFrame, 50)
+          setTimeout(() => {
+            clearInterval(i1)
+            const i2 = setInterval(nextFrame, 100)
+            setTimeout(() => {
+              clearInterval(i2)
+              const i3 = setInterval(nextFrame, 500)
+              setTimeout(() => {
+                clearInterval(i3)
+                const i4 = setInterval(() => {
+                  if (currentCat === category) {
+                    clearInterval(i4)
+                    setTimeout(() => this.getQuestion(category), 1000)
+                  } else {
+                    nextFrame()
+                  }
+                }, 600)
+              }, 1000)
+            }, 1000)
+          }, 1000)
         },
         getQuestion: function (category) {
           fetch(`${this.host}/preguntas?categoria=${category}`)
