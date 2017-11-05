@@ -123,9 +123,6 @@
         <button class="col-md-12">Jugar</button>
       </div>
 
-
-
-
       <div class="row" v-if="page === 'answer'">
         <div class="col-md-12 answer-container">
           <div v-if="answer.respondeOk" class="jumbotron alert">
@@ -141,23 +138,15 @@
 
 
             <div class="btn-group col-md-12 navegacion">
-              <a class="btn bg-danger text-white col" href="">Salir</a>
-              <a class="btn bg-success text-white col" href="">Seguir</a>
+              <a v-on:click="goHome" class="btn bg-danger text-white col"  href="#">Salir</a>
+              <a v-on:click="goRoulette" class="btn bg-success text-white col" href="#">Seguir</a>
             </div>
 
            <div class="jumbotron info-rta">
             <p>{{ answer.texto }}</p>
            </div>
-
-
-
         </div>
       </div>
-
-
-      
-
-
   </div>
   <script>
     var app = new Vue({
@@ -195,6 +184,12 @@
               this.answer = answer
               this.goAnswer()
             })
+        },
+        goHome: function (ev) {
+            this.page = "home";
+        },
+        goRoulette: function (ev) {
+            this.page = "roulette";
         }
       }
     })
