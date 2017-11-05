@@ -33,6 +33,19 @@
       max-width: 600px;
     }
 
+    .roulette.frame {
+      display: none;
+      margin: 0 auto;
+    }
+
+    .roulette.frame.visible {
+      display: block;
+    }
+
+    .category-legend {
+      margin-top: 30px;
+    }
+
     .container {
       background-color: #4CB9FF;
       min-height: 100vh;
@@ -52,7 +65,7 @@
       color: white;
     }
 
-  
+
 
 
   .answer-container p{
@@ -83,7 +96,7 @@
     width: auto;
     height: 300px;
   }
-  
+
   .home p{
     text-align: center;
   }
@@ -99,8 +112,18 @@
       <div class="row" v-if="page === 'roulette'">
         <div class="col-md-12 roulette-container">
           <a href="#" v-on:click="throwRoulette">
-            <img class="roulette" src="/assets/roulette.png">
+            <img class="roulette frame visible" data-category=0 src="/assets/ruleta-a3.png">
+            <img class="roulette frame" data-category=1 src="/assets/ruleta-a4.png">
+            <img class="roulette frame" data-category=2 src="/assets/ruleta-a5.png">
+            <img class="roulette frame" data-category=3 src="/assets/ruleta-a6.png">
+            <img class="roulette frame" data-category=4 src="/assets/ruleta-a7.png">
+            <img class="roulette frame" data-category=5 src="/assets/ruleta-a8.png">
           </a>
+        </div>
+        <div class="col-md-12 category-legend" v-if="categoryVisible">
+          <div class="jumbotron centered">
+            <h1>{{ category }}</h1>
+          </div>
         </div>
       </div>
 
@@ -118,7 +141,7 @@
 
       <div class="row home" v-if="page === 'home'">
         <img src="/assets/logo.png" alt="Cresi" class="img-responsive">
-        
+
         <p class="col-md-12">Conocé para aprender más</p>
         <button v-on:click="goRoulette" class="col-md-12">Jugar</button>
       </div>
@@ -147,13 +170,28 @@
            </div>
         </div>
       </div>
+
+
+
+
+
   </div>
   <script>
+    const CATEGORIES = {
+      0: 'Diversidad',
+      1: 'Salud',
+      2: 'Prevención',
+      3: 'Proyecto',
+      4: 'Derecho',
+      5: 'Al azar'
+    }
     var app = new Vue({
       el: '#app',
       data: {
         host: 'http://cresi.herokuapp.com',
-        page: 'home'
+        page: 'home',
+        categoryVisible: false,
+        category: ''
       },
       methods: {
         goQuestion: function () {
@@ -162,14 +200,59 @@
         goAnswer: function () {
           this.page = 'answer'
         },
-        getRandomArbitrary: function (min, max) {
-          return Math.floor(Math.random() * (max - min) + min);
+        showCategory: function (categoryId) {
+          this.category = CATEGORIES[categoryId]
+          this.categoryVisible = true
+        },
+        getRandomCategory: function (min, max) {
+          return Math.floor(Math.random() * (max + 1 - min) + min);
         },
         throwRoulette: function () {
-          this.getQuestion(this.getRandomArbitrary(0, 5))
+          // No me enorgullezco de este código. Refactor needed.
+          let currentCat = 0
+          function nextFrame () {
+            const activeEl = document.querySelector(".roulette.frame.visible")
+            const currentIdx = +activeEl.dataset["category"]
+            const nextIdx = currentIdx === 5 ? 0 : (+currentIdx + 1)
+            const nextEl = document.querySelector(`.roulette.frame[data-category="${nextIdx}"]`)
+            nextEl.classList.add("visible")
+            activeEl.classList.remove("visible")
+            currentCat = nextIdx
+          }
+
+          let speed = 100
+          const category = this.getRandomCategory(0, 5)
+          let count = 0
+
+          const i1 = setInterval(nextFrame, 50)
+          setTimeout(() => {
+            clearInterval(i1)
+            const i2 = setInterval(nextFrame, 100)
+            setTimeout(() => {
+              clearInterval(i2)
+              const i3 = setInterval(nextFrame, 500)
+              setTimeout(() => {
+                clearInterval(i3)
+                const i4 = setInterval(() => {
+                  if (currentCat === category) {
+                    clearInterval(i4)
+                    this.showCategory(category)
+                    setTimeout(() => this.getQuestion(category), 1000)
+                  } else {
+                    nextFrame()
+                  }
+                }, 600)
+              }, 1000)
+            }, 1000)
+          }, 1000)
         },
         getQuestion: function (category) {
-          fetch(`${this.host}/preguntas?categoria=${category}`)
+          let url = `${this.host}/preguntas`
+          if (category !== 5) { // Si la categoría es Al azar, no se le envía categoría al backend
+            url += `?categoria=${category}`
+          }
+
+          fetch(url)
             .then(res => res.json())
             .then(question => {
               this.question = question
