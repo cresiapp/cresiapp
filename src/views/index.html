@@ -42,6 +42,10 @@
       display: block;
     }
 
+    .category-legend {
+      margin-top: 30px;
+    }
+
     .container {
       background-color: #4CB9FF;
       min-height: 100vh;
@@ -116,6 +120,11 @@
             <img class="roulette frame" data-category=5 src="/assets/ruleta-a8.png">
           </a>
         </div>
+        <div class="col-md-12 category-legend" v-if="categoryVisible">
+          <div class="jumbotron centered">
+            <h1>{{ category }}</h1>
+          </div>
+        </div>
       </div>
 
       <div class="row"  v-if="page === 'question'">
@@ -186,7 +195,9 @@
       el: '#app',
       data: {
         host: 'http://cresi.herokuapp.com',
-        page: 'roulette'
+        page: 'roulette',
+        categoryVisible: false,
+        category: ''
       },
       methods: {
         goQuestion: function () {
@@ -194,6 +205,10 @@
         },
         goAnswer: function () {
           this.page = 'answer'
+        },
+        showCategory: function (categoryId) {
+          this.category = CATEGORIES[categoryId]
+          this.categoryVisible = true
         },
         getRandomCategory: function (min, max) {
           return Math.floor(Math.random() * (max + 1 - min) + min);
@@ -227,6 +242,7 @@
                 const i4 = setInterval(() => {
                   if (currentCat === category) {
                     clearInterval(i4)
+                    this.showCategory(category)
                     setTimeout(() => this.getQuestion(category), 1000)
                   } else {
                     nextFrame()
