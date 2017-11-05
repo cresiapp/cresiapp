@@ -4,9 +4,7 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.core.io.ClassPathResource;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
 import java.util.*;
 import java.util.function.Function;
 
@@ -30,7 +28,9 @@ public class CSVLoader {
     public void load() {
         Reader in = null;
         try {
-            in = new FileReader(new ClassPathResource("preguntas.csv").getFile());
+            final InputStream inputStream = new ClassPathResource("preguntas.csv").getInputStream();
+            in = new BufferedReader(new InputStreamReader(inputStream));
+
             Iterable<CSVRecord> records = CSVFormat.RFC4180.withFirstRecordAsHeader().parse(in);
             for (CSVRecord record : records) {
                 preguntas.add(
