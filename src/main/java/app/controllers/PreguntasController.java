@@ -49,7 +49,11 @@ public class PreguntasController {
 
     private List<Pregunta> preguntasCandidatas(Long categoriaId) {
         List<Pregunta> posibles = new ArrayList<>();
-        posibles = posiblesSegunCategoria(categoriaId, posibles);
+        try{
+            posibles = posiblesSegunCategoria(categoriaId, posibles);
+        }catch(NoEncontradoException e){
+            //hola hack, si me preguntas por categoria que no tengo sera random
+        }
 
         if(posibles.isEmpty()){
             posibles = todas();
