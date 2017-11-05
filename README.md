@@ -1,6 +1,6 @@
 # cresiapp
 
-##Objetivo del proyecto
+## Objetivo del proyecto
 Concientizar sobre la educación sexual entre jovenes de 12 y 18 años
 
 ## Tecnología
@@ -9,7 +9,7 @@ Java 8 + springBoot
 
 *Endpoints*
 * /preguntas
- * categoria <LONG>
+  * categoria <LONG>
  
 * /respuestas
   * pregunta_id <LONG>
