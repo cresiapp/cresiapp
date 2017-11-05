@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.*;
+import java.util.function.Function;
 
 public class CSVLoader {
 
@@ -17,6 +18,11 @@ public class CSVLoader {
 
     public CSVLoader() {
         this.descripcionPorCategoria = new HashMap<String, Categoria>();
+        descripcionPorCategoria.put("Derecho", new Categoria(0, "Derecho"));
+        descripcionPorCategoria.put("Salud", new Categoria(1, "Salud"));
+        descripcionPorCategoria.put("Diversidad", new Categoria(2, "Diversidad"));
+        descripcionPorCategoria.put("Proyecto", new Categoria(3, "Proyecto"));
+        descripcionPorCategoria.put("Prevención", new Categoria(4, "Prevención"));
         this.preguntas = new ArrayList<>();
         this.load();
     }
@@ -44,10 +50,10 @@ public class CSVLoader {
     }
 
     private Categoria determinarCategoria(String nombreCategoria) {
-        Categoria defaultValue = new Categoria(descripcionPorCategoria.size(), nombreCategoria);
-        descripcionPorCategoria.putIfAbsent(nombreCategoria, defaultValue);
-        return descripcionPorCategoria.get(nombreCategoria);
+        Categoria categoria = descripcionPorCategoria.computeIfAbsent(nombreCategoria, nombre -> new Categoria(descripcionPorCategoria.size(), nombre));
+        return categoria;
     }
+
 
     private Collection<Opcion> crearOpciones(CSVRecord opcionesCSV) {
         Collection<Opcion> opciones = new ArrayList<Opcion>();
