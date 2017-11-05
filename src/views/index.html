@@ -120,7 +120,7 @@
         <img src="/assets/logo.png" alt="Cresi" class="img-responsive">
         
         <p class="col-md-12">Conocé para aprender más</p>
-        <button class="col-md-12">Jugar</button>
+        <button v-on:click="goRoulette" class="col-md-12">Jugar</button>
       </div>
 
       <div class="row" v-if="page === 'answer'">
@@ -153,7 +153,7 @@
       el: '#app',
       data: {
         host: 'http://cresi.herokuapp.com',
-        page: 'roulette'
+        page: 'home'
       },
       methods: {
         goQuestion: function () {
