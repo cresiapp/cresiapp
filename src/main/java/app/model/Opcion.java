@@ -1,4 +1,4 @@
-package model;
+package app.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -6,7 +6,6 @@ import javax.persistence.Id;
 
 @Entity
 public class Opcion {
-
 	@Id
 	@GeneratedValue
 	private long id;
@@ -22,6 +21,12 @@ public class Opcion {
 		this.texto = texto;
 		this.correcta = esCorrecta;
 	}
+
+	public Opcion(String texto) {
+		super();
+		this.texto = texto;
+		this.correcta = false;
+	}
 	
 	public long getId() {
 		return id;
@@ -33,6 +38,10 @@ public class Opcion {
 	
 	public boolean isCorrecta() {
 		return correcta;
+	}
+
+	public void setCorrecta(boolean correcta) {
+		this.correcta = correcta;
 	}
 
 }

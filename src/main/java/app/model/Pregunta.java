@@ -1,21 +1,15 @@
-package model;
+package app.model;
 
 import java.util.Collection;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table
 public class Pregunta {
 
 	@Id
-	@GeneratedValue
+    @GeneratedValue
 	private long id;
 
 	private String enunciado;
@@ -26,14 +20,18 @@ public class Pregunta {
 	@OneToMany(cascade = {CascadeType.ALL})
 	private Collection<Opcion> opciones;
 
+	@OneToOne(cascade =  {CascadeType.REFRESH, CascadeType.DETACH})
+	private Categoria categoria;
+
 	public Pregunta() {
 	}
 
-	public Pregunta(String enunciado, Collection<Opcion> opciones, String explicacion) {
+	public Pregunta(String enunciado, Collection<Opcion> opciones, String explicacion, Categoria categoria) {
 		super();
 		this.enunciado = enunciado;
 		this.opciones = opciones;
 		this.explicacion = explicacion;
+		this.categoria = categoria;
 	}
 
 	public long getId() {
@@ -52,4 +50,16 @@ public class Pregunta {
 		return opciones;
 	}
 
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    public Opcion opcionCorrecta() {
+	    return this.opciones.stream().filter(p -> p.isCorrecta()).findFirst().get();
+
+    }
 }
