@@ -8,87 +8,12 @@
   <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
     crossorigin="anonymous">
-  <link rel="stylesheet" href="/assets/app.css">
-  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
   <title>Cresi</title>
 </head>
 
 <body>
-  <div id="app" class="container">
-    <div v-if="page !== 'home'" class="row header">
-      <img src="/assets/logo.png" alt="Cresi">
-    </div>
-
-    <!-- Ruleta -->
-    <div class="row" v-if="page === 'roulette'">
-      <div class="col-md-12 roulette-container">
-        <a href="#" v-on:click="throwRoulette">
-          <img class="roulette frame visible" data-category=0 src="/assets/ruleta-a3.png">
-          <img class="roulette frame" data-category=1 src="/assets/ruleta-a4.png">
-          <img class="roulette frame" data-category=2 src="/assets/ruleta-a5.png">
-          <img class="roulette frame" data-category=3 src="/assets/ruleta-a6.png">
-          <img class="roulette frame" data-category=4 src="/assets/ruleta-a7.png">
-          <img class="roulette frame" data-category=5 src="/assets/ruleta-a8.png">
-        </a>
-      </div>
-      <div class="col-md-12 category-legend" v-if="categoryVisible">
-        <div class="jumbotron centered">
-          <h1>{{ category }}</h1>
-        </div>
-      </div>
-    </div>
-
-    <!-- Pregunta -->
-    <div class="row" v-if="page === 'question'">
-      <div class="col-md-12 questions-container">
-        <div class="jumbotron">
-          <h4>{{ question.enunciado }}</h4>
-        </div>
-        <button class="btn col-md-8 offset-sm-2" v-for="option in question.opciones" v-bind:data-id="option.id" v-on:click="submitAnswer">
-          {{ option.texto }}
-        </button>
-      </div>
-    </div>
-
-    <!-- Inicio -->
-    <div class="row home" v-if="page === 'home'">
-      <img src="/assets/logo.png" alt="Cresi" class="img-responsive">
-
-      <p class="col-md-12 texto-blanco">Aprendé jugando</p>
-      <div class="mx-auto" style="width:100px">
-        <button v-on:click="goRoulette" type="button" class="btn btn-secondary btn-lg">
-          <span class="glyphicon glyphicon-play" aria-hidden="true"></span> Jugar
-        </button>
-      </div>
-    </div>
-
-    <!-- Respuesta -->
-    <div class="row" v-if="page === 'answer'">
-      <div class="col-md-12 answer-container">
-        <div v-if="answer.respondeOk" class="jumbotron alert">
-          <h2>CORRECTO!</h2>
-        </div>
-        <div v-else class="jumbotron alert alert-danger">
-          <h2>INCORRECTO!</h2>
-        </div>
-
-        <p>{{ answer.respuestaCorrecta }}</p>
-
-        <div class="bg-success text-white rta">{{ answer.opcion.texto }}</div>
-
-
-        <div class="btn-group col-md-12 navegacion">
-          <a v-on:click="goHome" class="btn bg-danger text-white col" href="#">Salir</a>
-          <a v-on:click="goRoulette" class="btn bg-success text-white col" href="#">Seguir</a>
-        </div>
-
-        <div class="jumbotron info-rta">
-          <p>{{ answer.texto }}</p>
-        </div>
-      </div>
-    </div>
-  </div>
-  <script src="/assets/app.js"></script>
+  <div id="app"></div>
+  <script src="/dist/app.js"></script>
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-109208015-1"></script>
   <script>

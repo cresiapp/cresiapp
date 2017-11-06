@@ -1,0 +1,27 @@
+{
+  "name": "cresi-web-app",
+  "version": "0.0.1",
+  "description": "Cresi web app",
+  "main": "webpack.config.js",
+  "scripts": {
+    "dev": "webpack-dev-server --open --hot",
+    "build": "webpack --progress --hide-modules",
+    "clean": "rm -rf dist",
+    "clean:hard": "npm run clean && rm -rf node_modules",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "css-loader": "^0.28.7",
+    "file-loader": "^1.1.5",
+    "vue-loader": "^13.4.0",
+    "vue-template-compiler": "^2.5.3",
+    "webpack": "^3.8.1",
+    "webpack-dev-server": "^2.9.4"
+  },
+  "dependencies": {
+    "vue": "^2.5.3"
+  }
+}
