@@ -180,6 +180,10 @@ export default {
 </script>
 
 <style>
+html {
+  font-size: 100%;
+}
+
 .texto-blanco {
   color: white;
   font-size: 2em;
