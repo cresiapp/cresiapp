@@ -1,5 +1,5 @@
 <template>
-  <div class="row header">
+  <div class="header">
     <img src="/assets/logo.png" alt="Cresi">
   </div>
 </template>

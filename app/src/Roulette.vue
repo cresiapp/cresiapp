@@ -41,8 +41,6 @@
 }
 
 .category-legend {
-  position: fixed;
-  top: 45%;
   text-align: center;
   opacity: 0.9
 }

@@ -1,9 +1,9 @@
 <template>
   <div id="app" class="container">
-    <div class="sticky">
+    <div class="row sticky">
     <topbar v-if="page !== 'home'"></topbar>
     </div>
-    <div class="scrollable">
+    <div class="container scrollable">
       <home v-if="page === 'home'" @play-click="handlePlayClick"></home>
       <roulette v-if="page === 'roulette'" v-on:question-selected="handleSelectedQuestion"></roulette>
       <question v-if="page === 'question'" v-bind:question="question" v-on:answer-submitted="handleSubmittedAnswer"></question>
