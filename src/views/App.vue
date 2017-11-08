@@ -1,180 +1,56 @@
 <template>
   <div id="app" class="container">
-    <div v-if="page !== 'home'" class="row header">
-      <img src="/assets/logo.png" alt="Cresi">
+    <div class="sticky">
+    <topbar v-if="page !== 'home'"></topbar>
     </div>
-
-    <!-- Ruleta -->
-    <div class="row" v-if="page === 'roulette'">
-      <div class="col-md-12 roulette-container">
-        <a href="#" v-on:click="throwRoulette">
-          <img class="roulette frame visible" data-category=0 src="/assets/ruleta-a3.png">
-          <img class="roulette frame" data-category=1 src="/assets/ruleta-a4.png">
-          <img class="roulette frame" data-category=2 src="/assets/ruleta-a5.png">
-          <img class="roulette frame" data-category=3 src="/assets/ruleta-a6.png">
-          <img class="roulette frame" data-category=4 src="/assets/ruleta-a7.png">
-          <img class="roulette frame" data-category=5 src="/assets/ruleta-a8.png">
-        </a>
-      </div>
-      <div class="col-md-12 category-legend" v-if="categoryVisible">
-        <div class="jumbotron centered">
-          <h1>{{ category }}</h1>
-        </div>
-      </div>
-    </div>
-
-    <!-- Pregunta -->
-    <div class="row" v-if="page === 'question'">
-      <div class="col-md-12 questions-container">
-        <div class="jumbotron">
-          <h4>{{ question.enunciado }}</h4>
-        </div>
-        <button class="btn col-md-8 offset-sm-2" v-for="option in question.opciones" v-bind:data-id="option.id" v-on:click="submitAnswer">
-          {{ option.texto }}
-        </button>
-      </div>
-    </div>
-
-    <!-- Inicio -->
-    <div class="row home" v-if="page === 'home'">
-      <img src="/assets/logo.png" alt="CrESI" class="img-responsive">
-
-      <p class="col-md-12 texto-blanco">Aprendé jugando</p>
-      <div class="mx-auto" style="width:100px">
-        <button v-on:click="goRoulette" type="button" class="btn btn-secondary btn-lg">
-          <span class="glyphicon glyphicon-play" aria-hidden="true"></span> Jugar
-        </button>
-      </div>
-    </div>
-
-    <!-- Respuesta -->
-    <div class="row" v-if="page === 'answer'">
-      <div class="col-md-12 answer-container">
-        <div v-if="answer.respondeOk" class="jumbotron alert">
-          <h2>CORRECTO!</h2>
-        </div>
-        <div v-else class="jumbotron alert alert-danger">
-          <h2>INCORRECTO!</h2>
-        </div>
-
-        <p>{{ answer.respuestaCorrecta }}</p>
-
-        <div class="bg-success text-white rta">{{ answer.opcion.texto }}</div>
-
-
-        <div class="btn-group col-md-12 navegacion">
-          <a v-on:click="goHome" class="btn bg-danger text-white col" href="#">Salir</a>
-          <a v-on:click="goRoulette" class="btn bg-success text-white col" href="#">Seguir</a>
-        </div>
-
-        <div class="jumbotron info-rta">
-          <p>{{ answer.texto }}</p>
-        </div>
-      </div>
+    <div class="scrollable">
+      <home v-if="page === 'home'" @play-click="handlePlayClick"></home>
+      <roulette v-if="page === 'roulette'" v-on:question-selected="handleSelectedQuestion"></roulette>
+      <question v-if="page === 'question'" v-bind:question="question" v-on:answer-submitted="handleSubmittedAnswer"></question>
+      <answer v-if="page === 'answer'" v-bind:question="question" v-bind:answer="answer" @home-click="handleHomeClick" @continue-click="handleContinueClick"></answer>
     </div>
   </div>
-</template>
+ </template>
 
 <script>
-const CATEGORIES = {
-  0: 'Diversidad',
-  1: 'Salud',
-  2: 'Prevención',
-  3: 'Proyecto',
-  4: 'Derecho',
-  5: 'Al azar'
-}
+import Topbar from './Topbar.vue'
+import Home from './Home.vue'
+import Roulette from './Roulette.vue'
+import Question from './Question.vue'
+import Answer from './Answer.vue'
+
 export default {
   name: 'app',
   data: () => ({
-    host: 'http://cresi.herokuapp.com',
-    page: 'home',
-    categoryVisible: false,
-    category: ''
+    page: 'home'
   }),
   methods: {
-    goQuestion: function () {
+    handlePlayClick: function () {
+      this.page = 'roulette'
+    },
+    handleSelectedQuestion: function (question) {
+      this.question = question
       this.page = 'question'
     },
-    goAnswer: function () {
+    handleSubmittedAnswer: function (answer) {
+      this.answer = answer
       this.page = 'answer'
     },
-    showCategory: function (categoryId) {
-      this.category = CATEGORIES[categoryId]
-      this.categoryVisible = true
+    handleHomeClick: function () {
+      this.answer = this.question = undefined
+      this.page = 'home'
     },
-    getRandomCategory: function (min, max) {
-      return Math.floor(Math.random() * (max + 1 - min) + min);
-    },
-    throwRoulette: function () {
-      // No me enorgullezco de este código. Refactor needed.
-      let currentCat = 0
-      function nextFrame() {
-        const activeEl = document.querySelector(".roulette.frame.visible")
-        const currentIdx = +activeEl.dataset["category"]
-        const nextIdx = currentIdx === 5 ? 0 : (+currentIdx + 1)
-        const nextEl = document.querySelector(`.roulette.frame[data-category="${nextIdx}"]`)
-        nextEl.classList.add("visible")
-        activeEl.classList.remove("visible")
-        currentCat = nextIdx
-      }
-
-      let speed = 100
-      const category = this.getRandomCategory(0, 5)
-      let count = 0
-
-      const i1 = setInterval(nextFrame, 50)
-      setTimeout(() => {
-        clearInterval(i1)
-        const i2 = setInterval(nextFrame, 100)
-        setTimeout(() => {
-          clearInterval(i2)
-          const i3 = setInterval(nextFrame, 500)
-          setTimeout(() => {
-            clearInterval(i3)
-            const i4 = setInterval(() => {
-              if (currentCat === category) {
-                clearInterval(i4)
-                this.showCategory(category)
-                setTimeout(() => this.getQuestion(category), 1000)
-              } else {
-                nextFrame()
-              }
-            }, 600)
-          }, 1000)
-        }, 1000)
-      }, 1000)
-    },
-    getQuestion: function (category) {
-      let url = `${this.host}/preguntas`
-      if (category !== 5) { // Si la categoría es Al azar, no se le envía categoría al backend
-        url += `?categoria=${category}`
-      }
-
-      fetch(url)
-        .then(res => res.json())
-        .then(question => {
-          this.question = question
-          this.goQuestion()
-        })
-    },
-    submitAnswer: function (ev) {
-      const answerId = ev.target.dataset["id"]
-      fetch(`${this.host}/respuestas?pregunta_id=${this.question.id}&respuesta_id=${answerId}`)
-        .then(res => res.json())
-        .then(answer => {
-          this.answer = answer
-          this.goAnswer()
-        })
-    },
-    goHome: function (ev) {
-      this.page = "home"
-    },
-    goRoulette: function (ev) {
-      this.categoryVisible = false
-      this.category = ''
-      this.page = "roulette";
+    handleContinueClick: function () {
+      this.answer = this.question = undefined
+      this.page = 'roulette'
     }
+  },
+  components: {
+    Topbar,
+    Home,
+    Roulette,
+    Question,
+    Answer
   }
 }
 </script>
