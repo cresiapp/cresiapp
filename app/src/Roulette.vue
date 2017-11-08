@@ -41,7 +41,10 @@
 }
 
 .category-legend {
-  margin-top: 30px;
+  position: fixed;
+  top: 45%;
+  text-align: center;
+  opacity: 0.9
 }
 </style>
 
