@@ -12,6 +12,21 @@
   </div>
 </template>
 
+<style>
+.questions-container button {
+  cursor: pointer;
+  margin-bottom: 10px;
+  text-align: center;
+  white-space: normal;
+}
+
+.questions-container .jumbotron {
+  background-color:#FFA500;
+  text-align: center;
+  color: white;
+}
+</style>
+
 <script>
 import config from './config'
 
@@ -30,5 +45,3 @@ export default {
   }
 }
 </script>
-
-

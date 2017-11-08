@@ -24,6 +24,27 @@
   </div>
 </template>
 
+<style>
+.answer-container p {
+  text-align: center;
+}
+
+.answer-container .rta {
+  margin-bottom: 20px;
+  padding: 20px;
+}
+
+.navegacion {
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.info-rta {
+  background-color: white;
+  color: black;
+}
+</style>
+
 <script>
 export default {
   name: 'answer',

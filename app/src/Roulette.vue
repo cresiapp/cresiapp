@@ -18,6 +18,33 @@
   </div>
 </template>
 
+
+<style>
+.roulette-container {
+  text-align: center;
+  margin-top: 10vh;
+  background-color: #4CB9FF;
+}
+
+.roulette {
+  width: 100%;
+  max-width: 600px;
+}
+
+.roulette.frame {
+  display: none;
+  margin: 0 auto;
+}
+
+.roulette.frame.visible {
+  display: block;
+}
+
+.category-legend {
+  margin-top: 30px;
+}
+</style>
+
 <script>
 import config from './config'
 
@@ -97,4 +124,3 @@ export default {
   }
 }
 </script>
-
