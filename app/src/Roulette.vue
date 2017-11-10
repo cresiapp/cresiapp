@@ -58,6 +58,14 @@ const CATEGORIES = {
   5: 'Al azar'
 }
 
+const SERVER_CATEGORIES = {
+  'Diversidad': 2,
+  'Salud': 1,
+  'Prevención': 4,
+  'Proyecto': 3,
+  'Derecho': 0
+}
+
 export default {
   name: 'roulette',
   data: () => ({
@@ -101,7 +109,8 @@ export default {
               if (currentCat === category) {
                 clearInterval(i4)
                 this.showCategory(category)
-                setTimeout(() => this.getQuestion(category), 1000)
+                const categoryName = CATEGORIES[category]
+                setTimeout(() => this.getQuestion(SERVER_CATEGORIES[categoryName]), 1000)
               } else {
                 nextFrame()
               }
